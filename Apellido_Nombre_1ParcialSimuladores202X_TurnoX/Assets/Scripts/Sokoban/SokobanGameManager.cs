@@ -84,36 +84,34 @@ public class SokobanGameManager : MonoBehaviour
         {
             Debug.Log("Intente moverme.");
 
-            Tablero tablAux = new Tablero(nivel.Tablero.casilleros.GetLength(0), nivel.Tablero.casilleros.GetLength(1));
-            tablAux.setearObjetos(casillero, nivel.Tablero.damePosicionesObjetos("Casillero"));
-            tablAux.setearObjetos(casilleroTarget, nivel.Tablero.damePosicionesObjetos("CasilleroTarget"));
-            tablAux.setearObjetos(bloque, nivel.Tablero.damePosicionesObjetos("Bloque"));
-            tablAux.setearObjetos(pared, nivel.Tablero.damePosicionesObjetos("Pared"));
-            tablAux.setearObjetos(jugador, nivel.Tablero.damePosicionesObjetos("Jugador"));
-
-            //TIP: pilaTablerosAnteriores.Push(tablAux);
-
             Vector2 posicionJugador = new Vector2(nivel.Tablero.damePosicionObjeto("Jugador").x, nivel.Tablero.damePosicionObjeto("Jugador").y);
             GameObject objProximo, objProximoProximo;
             objProximo = nivel.Tablero.dameObjeto(posicionJugador, orientacionJugador, 1);
             objProximoProximo = nivel.Tablero.dameObjeto(posicionJugador, orientacionJugador, 2);
 
-            if (objProximo != null && objProximo.CompareTag("casillero"))
+            if (objProximo != null && objProximo.CompareTag("casillero"))   // si el objeto proximo es un casillero vacio, me muevo
             {
+                GuardarTablero();   // guardo el tablero antes de moverme
+
                 nivel.Tablero.setearObjeto(casillero, posicionJugador);
                 nivel.Tablero.setearObjeto(jugador, posicionJugador, orientacionJugador, 1);
             }
-            else
+            else  // si el objeto proximo no es un casillero vacio
             {
-                if (objProximo != null && objProximo.CompareTag("bloque") && objProximoProximo != null)
+
+                if (objProximo != null && objProximo.CompareTag("bloque") && objProximoProximo != null && objProximoProximo.CompareTag("casillero"))  // si es un bloque y el que le sige es un casillero vacio
                 {
+                    GuardarTablero(); // guardo el tablero antes de moverme
+
                     nivel.Tablero.setearObjeto(jugador, posicionJugador, orientacionJugador, 1);
                     {
                         nivel.Tablero.setearObjeto(casillero, posicionJugador);
                         nivel.Tablero.setearObjeto(bloque, posicionJugador, orientacionJugador, 2); ;
                     }
                 }
+                else { }
             }
+           
             InstanciadorPrefabs.instancia.graficarObjetosTablero(nivel.Tablero, SokobanLevelManager.instancia.dameLstPrefabsSokoban());
 
             posOcupadasBloques = nivel.Tablero.damePosicionesObjetos("Bloque"); // actualizo las posiciones de los bloques
@@ -158,6 +156,21 @@ public class SokobanGameManager : MonoBehaviour
         {
             return false;   //no gane
         }
+    }
+
+    private void GuardarTablero()   // guarda los tableros en una pila
+    {
+        Tablero tablAux = new Tablero(nivel.Tablero.casilleros.GetLength(0), nivel.Tablero.casilleros.GetLength(1));
+        tablAux.setearObjetos(casillero, nivel.Tablero.damePosicionesObjetos("Casillero"));
+        tablAux.setearObjetos(casilleroTarget, nivel.Tablero.damePosicionesObjetos("CasilleroTarget"));
+        tablAux.setearObjetos(bloque, nivel.Tablero.damePosicionesObjetos("Bloque"));
+        tablAux.setearObjetos(pared, nivel.Tablero.damePosicionesObjetos("Pared"));
+        tablAux.setearObjetos(jugador, nivel.Tablero.damePosicionesObjetos("Jugador"));
+
+        pilaTablerosAnteriores.Push(tablAux); // agrego el tablero a la pila de tableros anteriores
+
+        Debug.Log("Guarde el tablero en la pila de tableros anteriores.");
+
     }
 }
 
