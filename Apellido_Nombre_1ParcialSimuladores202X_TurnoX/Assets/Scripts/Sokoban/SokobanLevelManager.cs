@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 public class SokobanLevelManager : MonoBehaviour
 {
+
+    // esta clase deberia ser la que cree un tablero en base de una imagen
+
+
     public GameObject casillero;
     public GameObject casilleroTarget;
     public GameObject jugador;
