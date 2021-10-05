@@ -126,6 +126,35 @@ public class SokobanGameManager : MonoBehaviour
         {
             Debug.Log("Intente deshacer.");
 
+            if (pilaTablerosAnteriores != null) // si la pila de tableros anteriores no es null
+            {
+                if (pilaTablerosAnteriores.Count != 0) // si la pila de tableros anteriores no esta vacia
+                {
+                    DeshacerMovimiento();   // deshago el ultimo movimiento
+
+                    InstanciadorPrefabs.instancia.graficarObjetosTablero(nivel.Tablero, SokobanLevelManager.instancia.dameLstPrefabsSokoban());     // vuelvo a graficar
+
+                    Debug.Log("Deshice el ultimo movimiento. Quedan " + pilaTablerosAnteriores.Count + " tableros en la pila.");
+
+                    estoyDeshaciendo = false;
+
+                }
+                else if (pilaTablerosAnteriores.Count == 0) // si la pila de tableros anteriores esta vacia
+                {
+                    Debug.Log("No hay tableros en la pila como para deshacer.");
+
+                    estoyDeshaciendo = false;
+                }
+                else { }
+
+            }
+            else
+            {
+                Debug.Log("La lista de tableros anteriores no esta asignada."); // si la pila de tableros anteriores es null
+
+                estoyDeshaciendo = false;
+            }
+
             estoyDeshaciendo = false;
         }
     }
@@ -170,6 +199,17 @@ public class SokobanGameManager : MonoBehaviour
         pilaTablerosAnteriores.Push(tablAux); // agrego el tablero a la pila de tableros anteriores
 
         Debug.Log("Guarde el tablero en la pila de tableros anteriores.");
+
+    }
+
+    private void DeshacerMovimiento()
+    {
+        Tablero tablAnterior = (Tablero)pilaTablerosAnteriores.Pop();
+        nivel.Tablero.setearObjetos(casillero, tablAnterior.damePosicionesObjetos("Casillero"));
+        nivel.Tablero.setearObjetos(casilleroTarget, tablAnterior.damePosicionesObjetos("CasilleroTarget"));
+        nivel.Tablero.setearObjetos(bloque, tablAnterior.damePosicionesObjetos("Bloque"));
+        nivel.Tablero.setearObjetos(pared, tablAnterior.damePosicionesObjetos("Pared"));
+        nivel.Tablero.setearObjetos(jugador, tablAnterior.damePosicionesObjetos("Jugador"));
 
     }
 }
