@@ -12,7 +12,7 @@ public class SokobanGameManager : MonoBehaviour
     Stack pilaTablerosAnteriores;
 
     string orientacionJugador;
-    string nombreNivelActual = "Nivel1";
+    public string nombreNivelActual;    // especifico cual nivel quiero que se genere
     bool gameOver = false;
     bool estoyDeshaciendo = false;
 

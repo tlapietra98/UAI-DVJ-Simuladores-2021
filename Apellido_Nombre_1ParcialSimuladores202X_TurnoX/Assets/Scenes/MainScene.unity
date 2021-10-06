@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c2b9b7775d7dd4695b5220c12374a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nombreNivelActual: Nivel2
 --- !u!4 &522317023
 Transform:
   m_ObjectHideFlags: 0
@@ -342,6 +343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9fbe4a59102dd42b2853430b194e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  imagenesTableros:
+  - {fileID: 2800000, guid: b22aedb4e2023b44593a70ff84a017f5, type: 3}
+  - {fileID: 2800000, guid: 4c547630ef6db9f4291a60427147c3cc, type: 3}
   casillero: {fileID: 8898389108243440609, guid: c9955a8308f6f0a48a9948a7b9fc9210,
     type: 3}
   casilleroTarget: {fileID: 4157755455362053466, guid: 06c990e9068278c4188a3d0fd273dd5f,
